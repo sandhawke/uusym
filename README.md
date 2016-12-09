@@ -1,6 +1,8 @@
-This module implements uusyms, an alternative to [uuid]s.   As with a uuid, a uusym has one essential property:
+This module implements uusyms, an alternative to
+[uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)s.
+As with a uuid, a uusym has one essential property:
 
-* You can use it identify something, without ambiguity, across time and space.  In a generic sense, a uusym is also a 'univerally unique identifier', like uuid, but it uses a different approach from standard uuids, as per [RFC 4122].
+* You can use it identify something, without ambiguity, across time and space.  In a generic sense, a uusym is also a 'univerally unique identifier', like uuid, but it uses a different approach from standard uuids, as per [RFC 4122](https://tools.ietf.org/html/rfc4122).
 
 These identifiers are important for decentralized systems, where parts change independently over time.  When your software needs to talk to other software about some thing (a function, method, attribute, file, person, etc) and the two programs are not necessarily evolving in close coordination, you can use a uuid or uusym to avoid accidentally referring to the wrong thing.
 
