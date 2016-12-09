@@ -1,8 +1,8 @@
 'use strict'
 
-const debug = require('debug')('nuuid')
+const debug = require('debug')('uusym')
 
-class NaturalUUID {
+class UUSYM {
   constructor (reg, ...docs) {
     debug('constructor', ...docs)
     this.reg = reg
@@ -29,14 +29,14 @@ class NaturalUUID {
   }
 
   /*
-    Return a small integer which is unique to this nuuid and the ones
+    Return a small integer which is unique to this uusym and the ones
     that match it (ie have a doc that's the same).
 
     There's one really hard part:
 
-    a = nuuid('alice')                -> key=1
-    b = nuuid('mrs. smith')           -> key=2
-    c = nuuid('alice', 'mrs. smith')  => oops, they're all really key 1
+    a = uusym('alice')                -> key=1
+    b = uusym('mrs. smith')           -> key=2
+    c = uusym('alice', 'mrs. smith')  => oops, they're all really key 1
 
     So we detect this and throw an error.  Two matches with different keys.
 
@@ -84,16 +84,20 @@ class Registry {
     return this.nextKeyNumber++
   }
 
+  uusym (...args) {
+    return new UUSYM(this, ...args)
+  }
 }
 
 // provide a non-Class style API
 
 let defaultRegistry = new Registry()
-const nuuid = (...args) => new NaturalUUID(defaultRegistry, ...args)
+const uusym = (...args) => defaultRegistry.uusym( ...args)
 
-nuuid.reset = () => {   // to help with testing, mostly
+uusym.reset = () => {   // to help with testing, mostly
   defaultRegistry = new Registry()
 }
 
-module.exports = nuuid
+module.exports = uusym
+uusym.Registry = Registry
 

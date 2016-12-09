@@ -93,6 +93,23 @@ carroll.addDef(['Charles Lutwidge Dodgson, who wrote under the pseudonym Lewis C
 // now alicebook.key and carroll.key should both work
 ```
 
+## Registries
+
+The uusym module value is a function (called uusym in these examples)
+which creates new uusyms in a default registry.
+
+Additional registries can be created:
+
+```js
+const uusym = require('uusym')
+const reg2 = new uusym.Registry()
+const reg3 = new uusym.Registry()
+
+console.log(uusym('First Example Definition').key) // => 1
+console.log(reg2.uusym('Second Example Definition').key)  // => 1
+console.log(reg3.uusym('Third Example Definition').key)  // => 1
+
+
 ## Markup (not implemented)
 
 For output/display of the definitions, use HTML if it starts with '<'
