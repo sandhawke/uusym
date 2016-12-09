@@ -2,18 +2,27 @@ This module implements uusyms, an alternative to
 [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)s.
 As with a uuid, a uusym has one essential property:
 
-* You can use it identify something, without ambiguity, across time and space.  In a generic sense, a uusym is also a 'univerally unique identifier', like uuid, but it uses a different approach from standard uuids, as per [RFC 4122](https://tools.ietf.org/html/rfc4122).
+* You can use it identify something, without ambiguity, across time
+  and space.  In a generic sense, a uusym is also a 'univerally unique
+  identifier', like uuid, but it uses a different approach from
+  standard uuids, as per [RFC 4122](https://tools.ietf.org/html/rfc4122).
 
-These identifiers are important for decentralized systems, where parts change independently over time.  When your software needs to talk to other software about some thing (a function, method, attribute, file, person, etc) and the two programs are not necessarily evolving in close coordination, you can use a uuid or uusym to avoid accidentally referring to the wrong thing.
+These identifiers are important for decentralized systems, where parts
+change independently over time.  When your software needs to talk to
+other software about some thing (a function, method, attribute, file,
+person, etc) and the two programs are not necessarily evolving in
+close coordination, you can use a uuid or uusym to avoid accidentally
+referring to the wrong thing.
 
-In practice in the Internet/IETF/W3C community there is some reliance on central coordination, eg with systems like the [IETF Message Headers Registry][1].
+In practice in the Internet/IETF/W3C community there is some reliance
+on central coordination, eg with systems like the [IETF Message Headers Registry](http://www.iana.org/assignments/message-headers/message-headers.xhtml).
 
 Two advantages to uusyms, relative too uuids:
 
 * They are intrinsically documented.  Instead of seeing an inscrutable expression like 8fb51cf4-be30-11e6-a1af-204747e0006a, developers see text explaining what the item is.
 * In a given context, such as a file or protocol stream, they can be much smaller, typically a byte or two, after the first use in that context.   (This is perhaps a trivial point, because you could do the same trick with uuids.)
 
-This is a distillation of the [GrowJSON] concept.
+This is a distillation of the [GrowJSON](https://decentralyze.com/2014/06/30/growjson/) concept.
 
 Enough talk, let's see some code.
 
@@ -110,12 +119,12 @@ const reg3 = new uusym.Registry()
 console.log(uusym('First Example Definition').key) // => 1
 console.log(reg2.uusym('Second Example Definition').key)  // => 1
 console.log(reg3.uusym('Third Example Definition').key)  // => 1
-
+```
 
 ## Markup (not implemented)
 
 For output/display of the definitions, use HTML if it starts with '<'
-and [CommonMark] otherwise.  The underlying matching system doesn't
+and [CommonMark](http://commonmark.org/) otherwise.  The underlying matching system doesn't
 care.
 
 ## Whitespace (issue; not implemented)
@@ -132,7 +141,7 @@ years.
 
 Languages may be tagged to allow the right definition to be displayed
 to users.  This is done by replacing str with [{lang: langtag}, str]
-in the definition, where langtag is a [BCP-47] language tag.  Language
+in the definition, where langtag is a [BCP-47](https://tools.ietf.org/html/bcp47) language tag.  Language
 direction can be specified similarly, with {dir: 'ltr'}.
 
 Alternatively, we could parse HTML to see what lang attribute is set,
