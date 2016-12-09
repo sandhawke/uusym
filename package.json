@@ -1,7 +1,7 @@
 {
   "name": "uusym",
   "version": "0.0.2",
-  "description": "Universally-Unique-Symbols -- like UUIDs based on natural language and yet small and efficient in protocols",
+  "description": "Universally-Unique-Symbols (like UUIDs) based on natural language and yet small and efficient in protocols",
   "main": "index.js",
   "directories": {
     "test": "test"

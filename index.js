@@ -92,7 +92,7 @@ class Registry {
 // provide a non-Class style API
 
 let defaultRegistry = new Registry()
-const uusym = (...args) => defaultRegistry.uusym( ...args)
+const uusym = (...args) => defaultRegistry.uusym(...args)
 
 uusym.reset = () => {   // to help with testing, mostly
   defaultRegistry = new Registry()

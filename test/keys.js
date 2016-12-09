@@ -39,7 +39,7 @@ test('match abc-xyz', t => {
 const pairs = [
   ['abc', 'xyz', false],
   ['abm', 'xmz', true]
-  ]
+]
 for (const pair of pairs) {
   test(`generated match ${pair[0]} with ${pair[1]}`, t => {
     uusym.reset()
@@ -53,7 +53,6 @@ for (const pair of pairs) {
     }
   })
 }
-  
 
 test(t => {
   uusym.reset()
@@ -123,7 +122,6 @@ test('in-order synonyms', t => {
   t.equal(a.key, b.key)
   t.equal(a.key, c.key)
 })
-
 
 test('triangle key equality, (a,x)', t => {
   uusym.reset()

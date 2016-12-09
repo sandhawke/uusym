@@ -4,32 +4,36 @@ As with a uuid, a uusym has one essential property:
 
 * You can use it identify something, without ambiguity, across time
   and space.  In a generic sense, a uusym is also a 'univerally unique
-  identifier', like uuid, but it uses a different approach from
-  standard uuids, as per [RFC 4122](https://tools.ietf.org/html/rfc4122).
+  identifier', like uuid, but it uses an utterly different approach from
+  [RFC 4122](https://tools.ietf.org/html/rfc4122) standard uuids.
 
-These identifiers are important for decentralized systems, where parts
-change independently over time.  When your software needs to talk to
-other software about some thing (a function, method, attribute, file,
-person, etc) and the two programs are not necessarily evolving in
-close coordination, you can use a uuid or uusym to avoid accidentally
-referring to the wrong thing.
+These identifiers (uusyms or uuids) are important for decentralized
+systems, where parts change independently over time.  When your
+software needs to talk to other software about something (a function,
+method, attribute, file, person, etc) and the two programs are not
+necessarily evolving in close coordination, you can use a uuid or
+uusym to avoid accidentally referring to the wrong thing.
 
 In practice in the Internet/IETF/W3C community there is some reliance
-on central coordination, eg with systems like the [IETF Message Headers Registry](http://www.iana.org/assignments/message-headers/message-headers.xhtml).
+on central coordination, eg with systems like the [IETF Message Headers Registry](http://www.iana.org/assignments/message-headers/message-headers.xhtml).   Most of the rest of the industry just lets one provider manage things, as with npm controlling the package.json format.
 
-Two advantages to uusyms, relative too uuids:
+Two advantages to uusyms, compared too uuids:
 
 * They are intrinsically documented.  Instead of seeing an inscrutable expression like 8fb51cf4-be30-11e6-a1af-204747e0006a, developers see text explaining what the item is.
-* In a given context, such as a file or protocol stream, they can be much smaller, typically a byte or two, after the first use in that context.   (This is perhaps a trivial point, because you could do the same trick with uuids.)
+* In a given context, such as a file or protocol stream, they can be much smaller, typically a byte or two, after the first use in that context.   (This is perhaps a trivial point, because you could do the same re-use compression trick with uuids.)
 
-This is a distillation of the [GrowJSON](https://decentralyze.com/2014/06/30/growjson/) concept.
+This is a distillation of some concepts explored earlier in [GrowJSON](https://decentralyze.com/2014/06/30/growjson/).
 
-Enough talk, let's see some code.
+## Install
 
 Install with
 ```sh
 npm install --save uusym
 ```
+
+Should work fine via browserfy, but not tested yet.
+
+## Example
 
 Use some in output:
 
@@ -75,7 +79,7 @@ giving a definition.
 
 
 ```js
-const myThine = uusym()
+const myThing = uusym()
 ```
 
 ## References (Not Implemented)
