@@ -1,0 +1,21 @@
+{
+  "name": "uusym",
+  "version": "1.0.0",
+  "description": "Universally-Unique-Symbols -- like UUIDs based on natural language and yet small and efficient in protocols",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "if [ ! -e node_modules/uusym ]; then ln -s .. node_modules/uusym; fi; faucet"
+  },
+  "author": "Sandro Hawke (http://hawke.org/sandro)",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^4.6.3"
+  },
+  "dependencies": {
+    "debug": "^2.3.3"
+  }
+}
