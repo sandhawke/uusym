@@ -1,11 +1,6 @@
-This module implements uusyms, an alternative to
-[uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)s.
-As with a uuid, a uusym has one essential property:
+This module implements uusyms, as sort of cross between [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)s and js6 Symbols.  The result is an interesting form of decentralized extensibility.
 
-* You can use it identify something, without ambiguity, across time
-  and space.  In a generic sense, a uusym is also a 'univerally unique
-  identifier', like uuid, but it uses an utterly different approach from
-  [RFC 4122](https://tools.ietf.org/html/rfc4122) standard uuids.
+As with a uuid, a uusym can be used to identify something, without ambiguity, across time and space.  So in the generic sense, a uusym is also a 'univerally unique identifier', like uuid.  But it uses a completely different approach from [RFC 4122](https://tools.ietf.org/html/rfc4122) standard uuids.
 
 These identifiers (uusyms or uuids) are important for decentralized
 systems, where parts change independently over time.  When your
@@ -70,6 +65,10 @@ definition is needed.
 The plan is that during system evolution, one leaves in all the old
 definitions that might be in use somewhere, eg in other software or in
 data files.
+
+## Serializing
+
+Include serializer / deserializer for cbor.
 
 ## Local Identifiers (Not Implemented)
 

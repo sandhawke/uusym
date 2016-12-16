@@ -2,6 +2,15 @@
 
 const debug = require('debug')('uusym')
 
+// annoying to have to include this even when it's only the caller
+// that might use it.   If encodeCBOR's argument was passed a way
+// to reach the cbor.Tagged class, we wouldn't need this.
+// ? raise cbor issue "allow classes offering encodeCBOR to not
+// depend on cbor package"  eg with encoder.Tagged
+const cbor = require('cbor')
+
+const cborTag = 0x7573796D // 'usym' in ascii; not yet registered
+
 class UUSYM {
   constructor (reg, ...docs) {
     debug('constructor', ...docs)
@@ -14,6 +23,13 @@ class UUSYM {
     }
   }
 
+  // see https://www.npmjs.com/package/cbor
+  //
+  encodeCBOR (encoder) {
+    const tagged = new cbor.Tagged(cborTag, this.docs)
+    return encoder.pushAny(tagged)
+  }
+  
   addDoc (doc) {
     // do more processing here, at some point
     this.docs.push(doc)
@@ -87,6 +103,23 @@ class Registry {
   uusym (...args) {
     return new UUSYM(this, ...args)
   }
+
+  /* 
+     Give an 'options' object that'll be handed to cbor.decodeAllSync,
+     set the right flags for any tagged uusyms to be decided into this
+     registry
+
+     As in:
+     
+     const opt = { ... }
+     somRegistry.configCBOR(opt)
+     output = cbor.decodeAllSync(input, opt)
+     
+  */
+  configCBOR (options) {
+    options.tags = options.tags || {}
+    options.tags[cborTag] = x => this.uusym(...x)
+  }
 }
 
 // provide a non-Class style API
@@ -100,4 +133,4 @@ uusym.reset = () => {   // to help with testing, mostly
 
 module.exports = uusym
 uusym.Registry = Registry
-
+uusym.configCBOR = (x) => defaultRegistry.configCBOR(x)
