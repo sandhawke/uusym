@@ -1,6 +1,6 @@
-This module implements uusyms, as sort of cross between [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)s and JS6 Symbols, with a hint of RDF.  The result is an interesting form of decentralized extensibility.
+This module implements uusyms, as sort of cross between [uuids](https://en.wikipedia.org/wiki/Universally_unique_identifier) and JS6 Symbols, with a hint of RDF.  The result is an interesting form of decentralized extensibility.
 
-As with a uuid, a uusym can be used to identify something without ambiguity, across time and space.  So in the generic sense, a uusym is also a 'univerally unique identifier', like a uuid.  But it uses a completely different approach from [RFC 4122](https://tools.ietf.org/html/rfc4122) standard uuids.  Instead of using a random number or information about your computer, it uses natural language text.    In uusym is, in a sense, a *Natural Language UUID*.
+As with a uuid, a uusym can be used to identify something without ambiguity, across time and space.  So in the generic sense, a uusym is also a 'univerally unique identifier', like a uuid.  But it uses a completely different approach from [RFC 4122](https://tools.ietf.org/html/rfc4122) standard uuids.  Instead of using a random number or information about your computer, it uses natural language text.    A uusym is, in a sense, a **natural language uuid**.
 
 This unique identifiers (uusyms or uuids) are useful for decentralized systems, where parts change independently over time. When your software needs to talk to other software about something (a function, method, attribute, file, person, etc) and the two programs are not necessarily evolving in close coordination, you can use a uuid or uusym to avoid accidentally referring to the wrong thing.
 
