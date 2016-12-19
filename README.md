@@ -1,23 +1,25 @@
-This module implements uusyms, as sort of cross between [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)s and js6 Symbols.  The result is an interesting form of decentralized extensibility.
+This module implements uusyms, as sort of cross between [uuid](https://en.wikipedia.org/wiki/Universally_unique_identifier)s and JS6 Symbols, with a hint of RDF.  The result is an interesting form of decentralized extensibility.
 
-As with a uuid, a uusym can be used to identify something, without ambiguity, across time and space.  So in the generic sense, a uusym is also a 'univerally unique identifier', like uuid.  But it uses a completely different approach from [RFC 4122](https://tools.ietf.org/html/rfc4122) standard uuids.
+As with a uuid, a uusym can be used to identify something without ambiguity, across time and space.  So in the generic sense, a uusym is also a 'univerally unique identifier', like a uuid.  But it uses a completely different approach from [RFC 4122](https://tools.ietf.org/html/rfc4122) standard uuids.  Instead of using a random number or information about your computer, it uses natural language text.    In uusym is, in a sense, a *Natural Language UUID*.
 
-These identifiers (uusyms or uuids) are important for decentralized
-systems, where parts change independently over time.  When your
-software needs to talk to other software about something (a function,
-method, attribute, file, person, etc) and the two programs are not
-necessarily evolving in close coordination, you can use a uuid or
-uusym to avoid accidentally referring to the wrong thing.
+This unique identifiers (uusyms or uuids) are useful for decentralized systems, where parts change independently over time. When your software needs to talk to other software about something (a function, method, attribute, file, person, etc) and the two programs are not necessarily evolving in close coordination, you can use a uuid or uusym to avoid accidentally referring to the wrong thing.
 
-In practice in the Internet/IETF/W3C community there is some reliance
-on central coordination, eg with systems like the [IETF Message Headers Registry](http://www.iana.org/assignments/message-headers/message-headers.xhtml).   Most of the rest of the industry just lets one provider manage things, as with npm controlling the package.json format.
+In practice in the Internet/IETF/W3C community, typically there is some reliance on central coordination, eg with systems like the [IETF Message Headers Registry](http://www.iana.org/assignments/message-headers/message-headers.xhtml).   Most of the rest of the industry just lets one provider manage things, as with npm controlling the package.json format.
 
-Two advantages to uusyms, compared too uuids:
+Advantages of uusyms, compared to uuids:
 
 * They are intrinsically documented.  Instead of seeing an inscrutable expression like 8fb51cf4-be30-11e6-a1af-204747e0006a, developers see text explaining what the item is.
-* In a given context, such as a file or protocol stream, they can be much smaller, typically a byte or two, after the first use in that context.   (This is perhaps a trivial point, because you could do the same re-use compression trick with uuids.)
+* This means they are less likely to be used incorrectly
+* It might even mean that people can be held accountable for using them correctly
 
-This is a distillation of some concepts explored earlier in [GrowJSON](https://decentralyze.com/2014/06/30/growjson/).
+Advatanges of uusyms, compared to URIs used in RDF:
+
+* You don't need a long-term-stable website to create them
+* There's no need to always refer to whoever created the identifier
+* There's no vulnerability (human or machine) in referring to a website which might go down or be inappropriately modified
+
+
+This is a distillation of some concepts explored earlier in [GrowJSON](https://decentralyze.com/2014/06/30/growjson/) and http://w3.org/ns/mics
 
 ## Install
 
@@ -123,6 +125,36 @@ console.log(uusym('First Example Definition').key) // => 1
 console.log(reg2.uusym('Second Example Definition').key)  // => 1
 console.log(reg3.uusym('Third Example Definition').key)  // => 1
 ```
+
+## Labels
+
+Gives you a simple way to do shortnames.
+
+```js
+const reg2 = new uusym.Registry()
+const x = regs.uusym('First Example Definition).label('ex1')
+const y = regs.byLabel.ex1
+assert(x === y)
+```
+
+## Loading
+
+One should be able to load from files and the web.
+
+```js
+const ref2 = new uusym.Registry()
+ref2.load({ source: 'http://example.org/myTerms',
+            sha256b64: 'E11b5QsBN2Nl6pdk5eFwBhtHAyIJwfpv8WW7yA1Sosw=' })
+ref2.sym.whatever  
+```
+
+Failure to prove a hash will produce a console warning (which includes the hash you should use).   Using the wrong hash will throw an error.
+
+In general, one should only use URLs which are indicated as immutable, and they will be cached indefinitely.  Could also be done as:
+
+ref2.log('http://example.org/.well-known/hashBase64/E11b5QsBN2Nl6pdk5eFwBhtHAyIJwfpv8WW7yA1Sosw=')
+
+Hash is provided to server as the ETag, so to help with conn-neg and versioning.
 
 ## Markup (not implemented)
 
