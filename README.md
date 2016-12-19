@@ -2,7 +2,7 @@ This module implements uusyms, as sort of cross between [uuids](https://en.wikip
 
 As with a uuid, a uusym can be used to identify something without ambiguity, across time and space.  So in the generic sense, a uusym is also a 'univerally unique identifier', like a uuid.  But it uses a completely different approach from [RFC 4122](https://tools.ietf.org/html/rfc4122) standard uuids.  Instead of using a random number or information about your computer, it uses natural language text.    A uusym is, in a sense, a **natural language uuid**.
 
-This unique identifiers (uusyms or uuids) are useful for decentralized systems, where parts change independently over time. When your software needs to talk to other software about something (a function, method, attribute, file, person, etc) and the two programs are not necessarily evolving in close coordination, you can use a uuid or uusym to avoid accidentally referring to the wrong thing.
+These unique identifiers (uusyms or uuids) are useful for decentralized systems, where parts change independently over time. When your software needs to talk to other software about something (a function, method, attribute, file, person, etc) and the two programs are not necessarily evolving in close coordination, you can use a uuid or uusym to avoid accidentally referring to the wrong thing.
 
 In practice in the Internet/IETF/W3C community, typically there is some reliance on central coordination, eg with systems like the [IETF Message Headers Registry](http://www.iana.org/assignments/message-headers/message-headers.xhtml).   Most of the rest of the industry just lets one provider manage things, as with npm controlling the package.json format.
 
@@ -32,8 +32,6 @@ Should work fine via browserfy, but not tested yet.
 
 ## Example
 
-Use some in output:
-
 
 ```js
 const uusym = require('uusym')
@@ -42,8 +40,6 @@ const alice = uusym('Alice, the protagonist of the 1865 novel _Alice In Wonderla
 const bob = uusym('Microsoft Bob, a 1995 software product intended to provide a more user-friendly interface to Microsoft Windows.')
 
 ...
-
-// come up with a better example, please!   But it needs more context.
 
 setUserInfo(alice.key, 'Alice')
 setUserInfo(bob.key, 'Bob')
@@ -70,7 +66,7 @@ data files.
 
 ## Serializing
 
-Include serializer / deserializer for cbor.
+Includes serializer / deserializer for cbor.
 
 ## Local Identifiers (Not Implemented)
 
@@ -132,7 +128,7 @@ Gives you a simple way to do shortnames.
 
 ```js
 const reg2 = new uusym.Registry()
-const x = regs.uusym('First Example Definition).label('ex1')
+const x = regs.uusym('First Example Definition').label('ex1')
 const y = regs.byLabel.ex1
 assert(x === y)
 ```
