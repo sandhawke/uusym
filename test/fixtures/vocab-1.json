@@ -1,0 +1,8 @@
+{
+  "alicebook": [
+    ["The 1865 novel _Alice In Wonderland_, by Charles Lutwidge Dodgson, writing under the pseudonym Lewis Carroll, featuring the beloved protagonist", {"ref": "alice"}]
+  ],
+  "alice": [
+    ["Alice, the protagonist of", {"ref": "alicebook"}]
+  ]
+}

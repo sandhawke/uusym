@@ -15,7 +15,7 @@ test(t => {
   t.assert(ba.length === 1)
   const b = ba[0]
   // console.log(b)
-  t.assert(b.constructor.name === 'UUSYM')
+  t.equal(b.constructor.name, 'Uusym')
   t.assert(a.match(b))
   t.assert(b.match(a))
   t.end()

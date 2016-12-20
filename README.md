@@ -79,7 +79,7 @@ giving a definition.
 const myThing = uusym()
 ```
 
-## References (Not Implemented)
+## References
 
 A definition can be an array (including sub-arrays, recursively)
 containing both strings and uusyms.  Strings are automatically
@@ -133,24 +133,82 @@ const y = regs.byLabel.ex1
 assert(x === y)
 ```
 
-## Loading
+## Import / Export
+
+(implemented)
+
+## Loading  NOTES
+
 
 One should be able to load from files and the web.
 
 ```js
 const ref2 = new uusym.Registry()
-ref2.load({ source: 'http://example.org/myTerms',
-            sha256b64: 'E11b5QsBN2Nl6pdk5eFwBhtHAyIJwfpv8WW7yA1Sosw=' })
+ref2.load({ src: 'http://example.org/myTerms',
+            integrity: 'sha256-E11b5QsBN2Nl6pdk5eFwBhtHAyIJwfpv8WW7yA1Sosw=' })
 ref2.sym.whatever  
 ```
 
-Failure to prove a hash will produce a console warning (which includes the hash you should use).   Using the wrong hash will throw an error.
+The 'integrity' field is computed as in standard [subresource integrity](https://www.w3.org/TR/SRI/).  Failure to provide a hash will produce a console warning (which includes a hash you could use).   Using the wrong hash will throw an error, since that is indistinguishable from the intended resource being compromised.
 
-In general, one should only use URLs which are indicated as immutable, and they will be cached indefinitely.  Could also be done as:
+load could also have a rename-function parameter, and/or a prefix parameter, to rename the symbols for you, like color into ieee_color or something.
 
-ref2.log('http://example.org/.well-known/hashBase64/E11b5QsBN2Nl6pdk5eFwBhtHAyIJwfpv8WW7yA1Sosw=')
+The fetched content should be ...?   JSON (with cycles), or JavaScript (to be checked carefully by hand first), or cbor (with cycles).   It needs labels, too.
 
-Hash is provided to server as the ETag, so to help with conn-neg and versioning.
+Maybe:
+```js
+{ "label1": [def1, def2, def3],
+  "label2": [def2, def3, def4]
+}  
+```
+But that wouldn't support references.   Maybe:
+
+```json
+[ { "label": "foo",
+    "defs": [ ["this is not like", 3] ],
+    "id": 3 },
+    ...
+]
+```
+
+Or the id could be implicit, in the position in the array.  Or it could be an object, with numeric-named keys?   { "1": { "label": "foo", "defs"... } }
+
+Or { "label": [    ["def 1 goes here", {$ref:"$.label"}, ...] ] }
+
+cbor would avoid the difficulty in references (using cbor-graph), but obviously be harder to read and maintain by hand. We COULD have a viewer std html conneg at the same address, or something.  But, human readable is nice.
+
+Maybe just one def, and they're collated by id, all being equivalent.  That way we could add metadata, since the position in the actual array is an identifer for that definition.
+
+```json
+[ { "label": "foo",
+    "def": ["this is not like", 3],
+    "id": 3 },
+  { "id": 3,
+    "def": "Ceci est en francais",
+    "lang": "fr"
+    "dir": "ltr"
+  }
+  ...
+]
+```
+
+
+
+```csv
+"ref", "label", "definition"
+1, foo, ....
+1, foo, ....another defn
+2, ,
+```
+
+That's silly.  The nesting part works fine with JSON.
+
+
+In general, one should only use URLs which are indicated as immutable, and they will be cached indefinitely.  Could perhaps be done as:
+
+ref2.load('http://example.org/.well-known/by-hash/sha256-E11b5QsBN2Nl6pdk5eFwBhtHAyIJwfpv8WW7yA1Sosw=')
+
+Hash is provided to server as the ETag, to help with conn-neg and versioning.
 
 ## Markup (not implemented)
 
@@ -158,10 +216,12 @@ For output/display of the definitions, use HTML if it starts with '<'
 and [CommonMark](http://commonmark.org/) otherwise.  The underlying matching system doesn't
 care.
 
-## Whitespace (issue; not implemented)
+## Whitespace
 
-Should matching be done with whitespace compressed, removed,
-normalized, or left untouched?  For what is whitespace, see
+We normalize whitespace, turning \s+ into a single space, before doing
+string comparison.
+
+ISSUE: is that the right definition of whitespace? see
 https://github.com/w3c/findtext/issues/5
 
 Maybe issue warnings when def's differ only in whitespace?  But that
