@@ -30,25 +30,23 @@ class Registry {
     return new Uusym(this, ...args)
   }
 
-  /* 
+  /*
      Give an 'options' object that'll be handed to cbor.decodeAllSync,
      set the right flags for any tagged uusyms to be decided into this
      registry
 
      As in:
-     
+
      const opt = { ... }
      somRegistry.configCBOR(opt)
      output = cbor.decodeAllSync(input, opt)
-     
+
   */
   configCBOR (options) {
     options.tags = options.tags || {}
     options.tags[cborTag] = x => this.uusym(...x)
   }
 
-
-  
   importFromWeb (url, integrity, cachedir, rename) {
     throw Error('not implemented')
     /*   wow, hard to make this not be annoying in async...
@@ -62,7 +60,7 @@ class Registry {
          uusym operations until the reg is loaded
      */
   }
-  
+
   // this is similar to require(...), typically just run at startup,
   // so we usually want sync
   importFromFileSync (base, filename, rename) {
@@ -91,7 +89,7 @@ class Registry {
       }
     }
   }
-  
+
   exportToObject (target) {
     this.assignLabelsWhereMissing()
     for (const sym of this.entries) {
@@ -115,7 +113,6 @@ class Registry {
   }
 }
 
-
 function copyDocs (sym) {
   const result = []
   for (const doc of sym.docs) {
@@ -137,7 +134,7 @@ function copyDoc (doc) {
   if (Array.isArray(doc)) {
     return doc.map(copyDoc)
   }
-  throw Error ('malformed uusym doc structure', doc)
+  throw Error('malformed uusym doc structure', doc)
 }
 
 function unCopyDoc (sym, doc) {
@@ -146,15 +143,13 @@ function unCopyDoc (sym, doc) {
   }
   if (doc.ref) {
     const found = sym[doc.ref]
-    if (!found) throw Error ('referenced symbol "' + doc.ref + '" not found')
+    if (!found) throw Error('referenced symbol "' + doc.ref + '" not found')
     return found
   }
   if (Array.isArray(doc)) {
     return doc.map(x => unCopyDoc(sym, x))
   }
-  throw Error ('malformed data in uusym import', doc)
+  throw Error('malformed data in uusym import', doc)
 }
-
-
 
 module.exports = Registry
