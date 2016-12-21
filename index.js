@@ -4,7 +4,6 @@ const debug = require('debug')('uusym')
 const Registry = require('./registry')
 const Uusym = require('./uusym')
 
-
 // provide a non-Class style API
 
 let defaultRegistry = new Registry()
