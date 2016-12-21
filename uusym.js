@@ -1,7 +1,6 @@
 'use strict'
 
 const debug = require('debug')('uusym')
-const Registry = require('./registry')
 const deepEqual = require('./deepequal')
 
 // annoying to have to include this even when it's only the caller
@@ -32,7 +31,7 @@ class Uusym {
     const tagged = new cbor.Tagged(cborTag, this.docs)
     return encoder.pushAny(tagged)
   }
-  
+
   addDoc (doc) {
     // do more processing here, at some point
     debug('adding doc', doc)
@@ -48,7 +47,7 @@ class Uusym {
     for (const a of this.cdocs) {
       for (const b of other.cdocs) {
         if (a === b) return true
-        if (deepEqual(a,b)) return true
+        if (deepEqual(a, b)) return true
       }
     }
     return false
@@ -62,7 +61,7 @@ class Uusym {
     this.reg.byLabel[n] = this
     return this
   }
-  
+
   /*
     Return a small integer which is unique to this uusym and the ones
     that match it (ie have a doc that's the same).
@@ -105,7 +104,7 @@ class Uusym {
 
 function canonicalize (doc) {
   // should we join consecutive strings?  ['a','b'] => ['ab'] ?   Nah.
-  if (typeof doc === 'string') return doc.replace(/\s+/g, ' ');
+  if (typeof doc === 'string') return doc.replace(/\s+/g, ' ')
   if (Array.isArray(doc)) return doc.map(canonicalize)
   return doc
 }
