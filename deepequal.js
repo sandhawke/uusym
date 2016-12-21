@@ -1,6 +1,6 @@
 'use strict'
 
-/* 
+/*
    Compare two array-trees for equality.   Don't go inside objects, just arrays.
 */
 
